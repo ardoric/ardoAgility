@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>{{comp.name}}</title>
+</head>
+<body>
+<h1>{{comp.name}}</h1>
+<ul>
+{% for course in courses %}
+<li><a href="/course/{{course.id}}">{{course.name}}</a></li>
+{% endfor %}
+</ul>
+</body>
+</html>
