@@ -15,7 +15,7 @@ INSERT INTO person (name, is_judge) VALUES
 	('Alexandra Gomes', 0),
 	('Alexandra Rodrigues', 0),
 	('Ana Emauz', 0),
-	('Ana Faria', 0),
+	('Ana Faria', 1),
 	('Ana Paula Jorge', 0),
 	('Ana Silva', 0),
 	('Andreia Duarte', 0),
@@ -59,7 +59,7 @@ INSERT INTO person (name, is_judge) VALUES
 	('Rui Abreu', 0),
 	('Sandra Cordeiro', 0),
 	('Sandra Silva', 0),
-	('Sérgio de Sousa', 0),
+	('Sérgio de Sousa', 1),
 	('Sofia Alves', 0),
 	('Susana Roncon Chaves', 0),
 	('Tânia Fernandes', 0),
@@ -71,7 +71,8 @@ INSERT INTO person (name, is_judge) VALUES
 	('Pánczél Gyöngyi', 0),
 	('Tomás Narciso', 0),
 	('João Narciso', 0),
-	('Sofia Narciso', 0) ;
+	('Sofia Narciso', 0),
+	('Vasco Ribeiro', 0);
 
 INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUES
 	('Choco', '', '', 0, '', 0),
@@ -142,3 +143,143 @@ INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUE
 	('Smash', '', '', 0, '', 0),
 	('Salina', '', '', 0, '', 0);
 
+
+INSERT INTO competition (name, date) VALUES
+	('82º Trofeu de Agility "Os Caogurus"', '2019-10-12'),
+	('83º Trofeu de Agility "Os Caogurus"', '2019-10-13') ;
+
+INSERT INTO course (name, competition_id, judge_id) VALUES
+	('Agility 0 - Manga 1 20 cm', 1, 48),
+	('Agility 0 - Manga 1 30 cm', 1, 48),
+	('Agility 0 - Manga 1 40 cm', 1, 48),
+
+	('Agility 0 - Manga 2 20 cm', 1, 48),
+	('Agility 0 - Manga 2 30 cm', 1, 48),
+	('Agility 0 - Manga 2 40 cm', 1, 48),
+
+	('Agility 1 - Manga 1 mini', 1, 48),
+	('Agility 1 - Manga 1 midi', 1, 48),
+	('Agility 1 - Manga 1 standard', 1, 48),
+
+	('Agility 1 - Manga 2 mini', 1, 48),
+	('Agility 1 - Manga 2 midi', 1, 48),
+	('Agility 1 - Manga 2 standard', 1, 48),
+
+	('Agility 2 - mini', 1, 48),
+	('Agility 2 - midi', 1, 48),
+	('Agility 2 - standard', 1, 48),
+
+	('Agility 3 - mini', 1, 4),
+	('Agility 3 - midi', 1, 4),
+	('Agility 3 - standard', 1, 4),
+
+	('Jumping 2 - mini', 1, 48),
+	('Jumping 2 - midi', 1, 48),
+	('Jumping 2 - standard', 1, 48),
+
+	('Jumping 3 - mini', 1, 4),
+	('Jumping 3 - midi', 1, 4),
+	('Jumping 3 - standard', 1, 4),
+
+
+	('Agility 0 - Manga 1 20 cm', 2, 48),
+	('Agility 0 - Manga 1 30 cm', 2, 48),
+	('Agility 0 - Manga 1 40 cm', 2, 48),
+
+	('Agility 0 - Manga 2 20 cm', 2, 48),
+	('Agility 0 - Manga 2 30 cm', 2, 48),
+	('Agility 0 - Manga 2 40 cm', 2, 48),
+
+	('Agility 1 - Manga 1 mini', 2, 48),
+	('Agility 1 - Manga 1 midi', 2, 48),
+	('Agility 1 - Manga 1 standard', 2, 48),
+
+	('Agility 1 - Manga 2 mini', 2, 48),
+	('Agility 1 - Manga 2 midi', 2, 48),
+	('Agility 1 - Manga 2 standard', 2, 48),
+
+	('Agility 2 - mini', 2, 48),
+	('Agility 2 - midi', 2, 48),
+	('Agility 2 - standard', 2, 48),
+
+	('Agility 3 - mini', 2, 4),
+	('Agility 3 - midi', 2, 4),
+	('Agility 3 - standard', 2, 4),
+
+	('Jumping 2 - mini', 2, 48),
+	('Jumping 2 - midi', 2, 48),
+	('Jumping 2 - standard', 2, 48),
+
+	('Jumping 3 - mini', 2, 4),
+	('Jumping 3 - midi', 2, 4),
+	('Jumping 3 - standard', 2, 4);
+
+
+INSERT INTO team (dog_id, person_id) VALUES
+	(1,1),
+	(2,2),
+	(3,3),
+	(4,4),
+	(5,5),
+	(6,6),
+	(7,7),
+	(8,8),
+	(9,9),
+	(10,10),
+	(11,11),
+	(12,12),
+	(13,13),
+	(14,13),
+	(15,14),
+	(16,15),
+	(17,16),
+	(18,17),
+	(19,18),
+	(20,19),
+	(21,20),
+	(22,21),
+	(23,22),
+	(24,23),
+	(25,24),
+	(26,24),
+	(27,25),
+	(28,26),
+	(29,27),
+	(30,28),
+	(31,28),
+	(32,29),
+	(33,30),
+	(34,31),
+	(35,32),
+	(36,33),
+	(37,34),
+	(38,35),
+	(39,36),
+	(40,37),
+	(41,38),
+	(42,39),
+	(43,40),
+	(44,41),
+	(45,42),
+	(46,43),
+	(47,43),
+	(48,44),
+	(49,45),
+	(50,46),
+	(51,46),
+	(52,47),
+	(53,48),
+	(54,48),
+	(55,49),
+	(56,50),
+	(57,51),
+	(58,52),
+	(59,53),
+	(61,54),
+	(62,55),
+	(63,56),
+	(64,57),
+	(65,58),
+	(66,59),
+	(67,60),
+	(60,61) ;
