@@ -34,6 +34,7 @@ CREATE TABLE competition (
 CREATE TABLE course (
 	id integer primary key,
 	name text,
+	competition_id integer references competition (id),
 	judge_id int references person (id)
 );
 
