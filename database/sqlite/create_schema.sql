@@ -1,11 +1,11 @@
 CREATE TABLE breed (
-	id int primary key,
+	id integer primary key,
 	name text,
 	fci_id int
 );
 
 CREATE TABLE dog (
-	id int primary key,
+	id integer primary key,
 	name text,
 	reg_name text,
 	date_of_birth date,
@@ -15,7 +15,7 @@ CREATE TABLE dog (
 );
 
 CREATE TABLE person (
-	id int primary key,
+	id integer primary key,
 	name text,
 	is_judge boolean
 );
@@ -26,13 +26,13 @@ CREATE TABLE team (
 );
 
 CREATE TABLE competition (
-	id int primary key,
+	id integer primary key,
 	name text,
 	date date
 );
 
 CREATE TABLE course (
-	id int primary key,
+	id integer primary key,
 	name text,
 	judge_id int references person (id)
 );
