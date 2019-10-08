@@ -21,8 +21,9 @@ CREATE TABLE person (
 );
 
 CREATE TABLE team (
-	dog_id int references dog (id),
-	person_id int references person (id)
+	id integer primary key,
+	dog_id integer references dog (id),
+	person_id integer references person (id)
 );
 
 CREATE TABLE competition (
