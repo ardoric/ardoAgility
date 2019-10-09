@@ -16,6 +16,8 @@
       <th>#</th>
       <th>Condutor</th>
       <th>Cao</th>
+      <th>Faltas</th>
+      <th>Tempo</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +26,16 @@
     <td>{{start.start_order}}</td>
     <td>{{start.person_name}}</td>
     <td>{{start.dog_name}}</td>
+{% if start.disqualified == None %}
+    <td></td>
+    <td></td>
+{% elif start.disqualified %}
+    <td>DQ</td>
+    <td>DQ</td>
+{% else %}
+    <td>{{start.course_faults}}</td>
+    <td>{{start.trial_time}}</td>
+{% endif %}
   </tr>
 {% endfor %}
   </tbody>
