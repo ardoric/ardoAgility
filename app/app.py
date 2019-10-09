@@ -41,11 +41,12 @@ def course(course_id):
     
     course = c.execute('SELECT name FROM course where id = ?', (course_id,) ).fetchone()
     startlist = c.execute("""
-        SELECT start_order, dog.name dog_name, person.name person_name 
+        SELECT start_order, dog.name dog_name, person.name person_name, trial.time trial_time, trial.course_faults course_faults, trial.disqualified disqualified
         FROM startlist 
         INNER JOIN team on (team.id = startlist.team_id) 
         INNER JOIN dog on (team.dog_id = dog.id) 
-        INNER JOIN person on (team.person_id = person.id) 
+        INNER JOIN person on (team.person_id = person.id)
+        LEFT OUTER JOIN trial on (trial.course_id = startlist.course_id AND trial.team_id = startlist.team_id)
         WHERE startlist.course_id = ?
         ORDER BY start_order""", (course_id,) ).fetchall()
     
