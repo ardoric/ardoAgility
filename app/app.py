@@ -36,7 +36,22 @@ def competition(comp_id):
 
 @app.route('/course/<int:course_id>')
 def course(course_id):
-    return ''
+    conn = get_conn()
+    c = conn.cursor()
+    
+    course = c.execute('SELECT name FROM course where id = ?', (course_id,) ).fetchone()
+    startlist = c.execute("""
+        SELECT start_order, dog.name dog_name, person.name person_name 
+        FROM startlist 
+        INNER JOIN team on (team.id = startlist.team_id) 
+        INNER JOIN dog on (team.dog_id = dog.id) 
+        INNER JOIN person on (team.person_id = person.id) 
+        WHERE startlist.course_id = ?
+        ORDER BY start_order""", (course_id,) ).fetchall()
+    
+    c.close()
+    conn.close()
+    return render_template('course.html', course=course, startlist=startlist)
 
 
 @app.route('/teams')
