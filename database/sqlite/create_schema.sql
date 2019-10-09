@@ -50,5 +50,6 @@ CREATE TABLE trial (
 	team_id int references team (id),
 	time real,
 	course_faults real,
-	disqualified boolean
+	disqualified boolean,
+	CONSTRAINT unique_trial UNIQUE (course_id, team_id)
 );
