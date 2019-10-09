@@ -39,6 +39,12 @@ CREATE TABLE course (
 	judge_id int references person (id)
 );
 
+CREATE TABLE startlist (
+	course_id integer references course (id),
+	team_id integer references team (id),
+	start_order integer	
+);
+
 CREATE TABLE trial (
 	course_id int references course (id),
 	team_id int references team (id),
