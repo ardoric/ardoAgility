@@ -39,9 +39,9 @@ def course(course_id):
     conn = get_conn()
     c = conn.cursor()
     
-    course = c.execute('SELECT name FROM course where id = ?', (course_id,) ).fetchone()
+    course = c.execute('SELECT id, name FROM course where id = ?', (course_id,) ).fetchone()
     startlist = c.execute("""
-        SELECT start_order, dog.name dog_name, person.name person_name, trial.time trial_time, trial.course_faults course_faults, trial.disqualified disqualified
+        SELECT team.id team_id, start_order, dog.name dog_name, person.name person_name, trial.time trial_time, trial.course_faults course_faults, trial.disqualified disqualified
         FROM startlist 
         INNER JOIN team on (team.id = startlist.team_id) 
         INNER JOIN dog on (team.dog_id = dog.id) 

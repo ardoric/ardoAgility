@@ -18,6 +18,7 @@
       <th>Cao</th>
       <th>Faltas</th>
       <th>Tempo</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +37,7 @@
     <td>{{start.course_faults}}</td>
     <td>{{start.trial_time}}</td>
 {% endif %}
+    <td><a href="/trial/{{course.id}}/{{start.team_id}}">Submeter</a></td>
   </tr>
 {% endfor %}
   </tbody>
