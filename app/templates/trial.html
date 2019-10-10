@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Submeter Tempo</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+	body { background-color: lightyellow }
+</style>
+</head>
+<body>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
+<h1>Submeter Tempo</h1>
+
+<div class="w-25">
+<form method="post">
+  <div class="form-group">
+    <label for="course_id">Course Id</label>
+    <input type="text" class="form-control" id="course_id" name="course_id" value="{{course.name}}" readonly />
+  </div>
+  <div class="form-group">
+    <label for="team_id">Team Id</label>
+    <input type="text" class="form-control" id="team_id" name="team_id" value="{{team.dog_name}} + {{team.person_name}}" readonly/>
+  </div>
+  <div class="form-group">
+    <label for="time">Tempo</label>
+    <input type="text" class="form-control" id="time" name="time" />
+  </div>
+  <div class="form-group">
+    <label for="faults">Faltas</label>
+    <input type="text" class="form-control" id="faults" name="faults" />
+  </div>
+  <div class="form-group">
+    <label for="refusals">Recusas</label>
+    <input type="text" class="form-control" id="refusals" name="refusals" />
+  </div>
+    <button class="btn btn-primary" name="action" type="submit" value="set_trial">Submeter Tempo</button>
+    <button class="btn btn-primary" formaction="/disqualify/{{course.id}}/{{team.id}}" name="action" type="submit" value="disqualify">Desqualificar</button>
+</form>
+</div>
+</body>
+</html>
+

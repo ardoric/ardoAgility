@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 app = Flask(__name__)
@@ -54,6 +54,64 @@ def course(course_id):
     conn.close()
     return render_template('course.html', course=course, startlist=startlist)
 
+
+@app.route('/trial/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
+def submit_trial(course_id, team_id):
+    if request.method == 'GET':
+        conn = get_conn()
+        c = conn.cursor()
+        
+        course = c.execute('SELECT id, name FROM course where id = ?', (course_id,)).fetchone()
+        team   = c.execute("""
+            SELECT team.id id, dog.name dog_name, person.name person_name 
+            FROM team 
+            INNER JOIN dog ON (dog.id = team.dog_id)
+            INNER JOIN person ON (person.id = team.person_id)
+            WHERE team.id = ?""", (team_id,) ).fetchone()
+
+        c.close()
+        conn.close()
+        return render_template('trial.html', course=course, team=team)
+    else:
+        if request.form['action'] != 'set_trial':
+            raise Exception('incorrect action')
+        conn = get_conn()
+        c = conn.cursor()
+        
+        form = request.form
+        if int(form['refusals']) >= 3:
+            time = 0.0
+            course_faults = 0.0
+            disqualified = 1
+        else:    
+            time = float(form['time'])
+            course_faults = ( int(form['faults']) + int(form['refusals']) ) * 5.0
+            disqualified = 0
+        
+        c.execute('INSERT OR REPLACE INTO trial (course_id, team_id, time, course_faults, disqualified) VALUES (?,?,?,?,?)', 
+            (course_id,
+            team_id,
+            time,
+            course_faults,
+            disqualified) )
+        
+        conn.commit()
+        
+        c.close()
+        conn.close()
+        return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+
+@app.route('/disqualify/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
+def disqualify(course_id, team_id):
+    conn = get_conn()
+    c = conn.cursor()
+    
+    c.execute('INSERT OR REPLACE INTO trial (course_id, team_id, time, course_faults, disqualified) VALUES (?,?,0,0,1)', (course_id, team_id) )
+    
+    conn.commit()
+    c.close()
+    conn.close()
+    return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
 
 @app.route('/teams')
 def teams():
