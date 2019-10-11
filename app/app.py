@@ -56,6 +56,14 @@ def course(course_id):
     return render_template('course.html', course=course, startlist=startlist)
 
 
+def next_trial(course_id, team_id, c):
+    this_trial = c.execute('SELECT start_order FROM startlist WHERE course_id = ? AND team_id = ?', (course_id, team_id)).fetchone()
+    next_trial = c.execute('SELECT team_id FROM startlist WHERE course_id = ? AND start_order > ? ORDER BY start_order', (course_id, this_trial['start_order'])).fetchone()
+    if next_trial:
+        return next_trial['team_id']
+    else:
+        return 0
+
 @app.route('/trial/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
 def submit_trial(course_id, team_id):
     if request.method == 'GET':
@@ -97,10 +105,15 @@ def submit_trial(course_id, team_id):
             disqualified) )
         
         conn.commit()
-        
+
+        next_team = next_trial(course_id, team_id, c)
+
         c.close()
         conn.close()
-        return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+        if next_team > 0:
+            return redirect(url_for('submit_trial', course_id=course_id, team_id=next_team))
+        else:
+            return redirect(url_for('course', course_id=course_id))
 
 @app.route('/disqualify/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
 def disqualify(course_id, team_id):
@@ -110,9 +123,13 @@ def disqualify(course_id, team_id):
     c.execute('INSERT OR REPLACE INTO trial (course_id, team_id, time, course_faults, disqualified) VALUES (?,?,0,0,1)', (course_id, team_id) )
     
     conn.commit()
+    next_team = next_trial(course_id, team_id, c)
     c.close()
     conn.close()
-    return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+    if next_team > 0:
+        return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+    else:
+        return redirect(url_for('course', course_id=course_id))
 
 @app.route('/sort/<int:course_id>')
 def resort(course_id):
