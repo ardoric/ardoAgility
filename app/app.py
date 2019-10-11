@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import random
 import sqlite3
 
 app = Flask(__name__)
@@ -112,6 +113,22 @@ def disqualify(course_id, team_id):
     c.close()
     conn.close()
     return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+
+@app.route('/sort/<int:course_id>')
+def resort(course_id):
+    conn = get_conn()
+    c = conn.cursor()
+
+    startlist = c.execute('SELECT course_id, team_id FROM startlist WHERE course_id = ?', (course_id,)).fetchall()
+    random.shuffle(startlist)
+    for (i,s) in enumerate(startlist):
+        c.execute('UPDATE startlist SET start_order = ? WHERE course_id = ? AND team_id = ?', (i+1, s['course_id'], s['team_id']) )
+
+    conn.commit()
+    c.close()
+    conn.close()
+    return redirect(url_for('course', course_id=course_id))
+    
 
 @app.route('/teams')
 def teams():
