@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, abort
 import random
 import sqlite3
 
@@ -73,6 +73,9 @@ def next_trial(course_id, team_id, c):
 
 @app.route('/trial/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
 def submit_trial(course_id, team_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
     if request.method == 'GET':
         conn = get_conn()
         c = conn.cursor()
@@ -124,6 +127,9 @@ def submit_trial(course_id, team_id):
 
 @app.route('/disqualify/<int:course_id>/<int:team_id>', methods=['GET', 'POST'])
 def disqualify(course_id, team_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
     conn = get_conn()
     c = conn.cursor()
     
@@ -140,6 +146,9 @@ def disqualify(course_id, team_id):
 
 @app.route('/sort/<int:course_id>')
 def resort(course_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
     conn = get_conn()
     c = conn.cursor()
 
