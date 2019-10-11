@@ -1,8 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import random
 import sqlite3
 
 app = Flask(__name__)
+
+with open('app_secret') as f:
+    app.secret_key = f.read()
+with open('password') as f:
+    le_password = f.read().strip()
+
+
 
 def get_conn():
     conn = sqlite3.connect('caogurus.db')
@@ -10,7 +17,7 @@ def get_conn():
     return conn
 
 @app.route('/')
-def hello():
+def index():
     conn = get_conn()
     c = conn.cursor()
     
@@ -145,7 +152,20 @@ def resort(course_id):
     c.close()
     conn.close()
     return redirect(url_for('course', course_id=course_id))
-    
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.form['action'] == 'login':
+        if request.form['password'] == le_password:
+            session['role'] = 'admin'
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html')
+    else:
+        session.pop('role', None)
+        return redirect(url_for('index'))
 
 @app.route('/teams')
 def teams():
