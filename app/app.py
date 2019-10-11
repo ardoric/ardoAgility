@@ -62,6 +62,29 @@ def course(course_id):
     conn.close()
     return render_template('course.html', course=course, startlist=startlist)
 
+@app.route('/results/<int:course_id>')
+def results(course_id):
+    conn = get_conn()
+    c = conn.cursor()
+    
+    course = c.execute('SELECT id, name FROM course where id = ?', (course_id,) ).fetchone()
+    startlist = c.execute("""
+        SELECT team.id team_id, start_order, dog.name dog_name, person.name person_name, trial.time trial_time, trial.course_faults course_faults, trial.disqualified disqualified
+        FROM startlist 
+        INNER JOIN team on (team.id = startlist.team_id) 
+        INNER JOIN dog on (team.dog_id = dog.id) 
+        INNER JOIN person on (team.person_id = person.id)
+        LEFT OUTER JOIN trial on (trial.course_id = startlist.course_id AND trial.team_id = startlist.team_id)
+        WHERE startlist.course_id = ?
+        ORDER BY 
+            ifnull(trial.disqualified, 2),
+            trial.course_faults,
+            trial.time,
+            startlist.start_order""", (course_id,) ).fetchall()
+    
+    c.close()
+    conn.close()
+    return render_template('results.html', course=course, startlist=startlist)
 
 def next_trial(course_id, team_id, c):
     this_trial = c.execute('SELECT start_order FROM startlist WHERE course_id = ? AND team_id = ?', (course_id, team_id)).fetchone()

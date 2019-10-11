@@ -10,7 +10,7 @@
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>{{course.name}}</h1>
-<a href="/results/{{course.id}}">Resultados</a>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -19,15 +19,16 @@
       <th>Cao</th>
       <th>Faltas</th>
       <th>Tempo</th>
-{% if session['role'] == 'admin' %}
-      <th></th>
-{% endif %}
-    </tr>
+   </tr>
   </thead>
   <tbody>
 {% for start in startlist %}
   <tr>
-    <td>{{start.start_order}}</td>
+{% if start.disqualified == None %}
+    <td>-</td>
+{% else %}
+    <td>{{loop.index}}</td>
+{% endif %}
     <td>{{start.person_name}}</td>
     <td>{{start.dog_name}}</td>
 {% if start.disqualified == None %}
@@ -40,17 +41,9 @@
     <td>{{start.course_faults}}</td>
     <td>{{start.trial_time}}</td>
 {% endif %}
-{% if session['role'] == 'admin' %}
-    <td><a href="/trial/{{course.id}}/{{start.team_id}}">Submeter</a></td>
-{% endif %}
   </tr>
 {% endfor %}
   </tbody>
 </table>
-{% if session['role'] == 'admin' %}
-<form action="/sort/{{course.id}}">
-  <input type="submit" class="btn btn-primary" value="Reordenar" name="action" />
-</form>
-{% endif %}
 </body>
 </html>
