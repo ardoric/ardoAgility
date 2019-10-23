@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session, abort
 import random
 import sqlite3
+import hashlib
+import base64
 
 app = Flask(__name__)
 
 with open('app_secret') as f:
     app.secret_key = f.read()
 with open('password') as f:
-    le_password = f.read().strip()
+    le_password = base64.b64decode(f.read().strip())
 
 
 
@@ -190,7 +192,7 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.form['action'] == 'login':
-        if request.form['password'] == le_password:
+        if hashlib.sha256(request.form['password']).digest() == le_password:
             session['role'] = 'admin'
             return redirect(url_for('index'))
         else:
