@@ -201,6 +201,18 @@ def login():
         session.pop('role', None)
         return redirect(url_for('index'))
 
+@app.route('/people')
+def people():
+    conn = get_conn()
+    c = conn.cursor()
+    
+    ppl_list = c.execute('SELECT name, is_judge FROM person').fetchall()
+    
+    c.close()
+    conn.close()
+    return render_template('people.html',people=ppl_list)
+    
+
 @app.route('/teams')
 def teams():
     conn = get_conn()
