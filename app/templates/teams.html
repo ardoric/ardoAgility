@@ -9,5 +9,24 @@
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Equipas</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Condutor</th>
+      <th>Cao</th>
+   </tr>
+  </thead>
+  <tbody>
+{% for team in teams %}
+  <tr>
+  	<td>{{team.person_name}}</td>
+  	<td>{{team.dog_name}}</td>
+  </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+
 </body>
 </html>

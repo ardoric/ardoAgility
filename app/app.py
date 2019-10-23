@@ -228,8 +228,14 @@ def teams():
     conn = get_conn()
     c = conn.cursor()
     
+    teams_list = c.execute("""
+        SELECT person.name person_name, dog.name dog_name 
+        FROM team
+        INNER JOIN person on team.person_id = person.id
+        INNER JOIN dog ON team.dog_id = dog.id
+    """).fetchall()
     
     c.close()
     conn.close()
-    return render_template('teams.html')
+    return render_template('teams.html', teams=teams_list)
     
