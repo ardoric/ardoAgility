@@ -213,7 +213,7 @@ def people():
     return render_template('people.html',people=ppl_list)
     
 @app.route('/dogs')
-def people():
+def dogs():
     conn = get_conn()
     c = conn.cursor()
     
