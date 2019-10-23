@@ -23,7 +23,7 @@ def index():
     conn = get_conn()
     c = conn.cursor()
     
-    c.execute('SELECT id,name FROM competition')
+    c.execute('SELECT id,name,date FROM competition ORDER BY date DESC')
     comps = c.fetchall()
     
     c.close()

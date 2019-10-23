@@ -11,7 +11,7 @@
 <h1>Competicoes</h1>
 <ul>
 {% for comp in competitions %}
-<li><a href="/competition/{{comp.id}}">{{comp.name}}</a></li>
+<li>{{comp.date}} - <a href="/competition/{{comp.id}}">{{comp.name}}</a></li>
 {% endfor %}
 </ul>
 </body>
