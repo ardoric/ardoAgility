@@ -72,7 +72,11 @@ INSERT INTO person (name, is_judge) VALUES
 	('Tomás Narciso', 0),
 	('João Narciso', 0),
 	('Sofia Narciso', 0),
-	('Vasco Ribeiro', 0);
+	('Vasco Ribeiro', 0),
+	('Hugo Simões', 0),
+	('Carla Cruz', 0),
+	('João Fernandes', 0),
+	('Gonçalo Amorim', 0) ;
 
 INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUES
 	('Choco', '', '', 0, '', 0),
@@ -141,7 +145,12 @@ INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUE
 	('Kylo', '', '', 0, '', 0),
 	('Sheepy', '', '', 0, '', 0),
 	('Smash', '', '', 0, '', 0),
-	('Salina', '', '', 0, '', 0);
+	('Salina', '', '', 0, '', 0),
+	('Ozzy', '', '', 0, '', 0),
+	('Elsa', '', '', 0, '', 0),
+	('Kuka', '', '', 0, '', 0),
+	('Bu', '', '', 0, '', 0),
+	('Zip', '', '', 0, '', 0);
 
 
 INSERT INTO competition (name, date) VALUES
@@ -282,7 +291,12 @@ INSERT INTO team (dog_id, person_id) VALUES
 	(64,57),
 	(65,58),
 	(66,59),
-	(67,60);
+	(67,60),
+	(68,62),
+	(69,63),
+	(70,64),
+	(71,65),
+	(72,65) ;
 
 
 INSERT INTO startlist (course_id, team_id) VALUES
@@ -292,6 +306,8 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(1, 34), -- Mariana Ribeiro + Foxy
 	(1, 41), -- Paulo Cristao   + RAFA
 	(1, 57), -- Tania Fernandes + Shorty
+	(1, 68), -- Hugo Simoes     + Ozzy
+	(1, 70), -- Joao Fernandes  + Kuka
 
 	-- Agility 0 - Manga 1 30 cm
 	(2, 3),  -- Ana Emauz            + Kurt 
@@ -320,6 +336,8 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(4, 34), -- Mariana Ribeiro + Foxy
 	(4, 41), -- Paulo Cristao   + RAFA
 	(4, 57), -- Tania Fernandes + Shorty
+	(4, 68), -- Hugo Simoes     + Ozzy
+	(4, 70), -- Joao Fernandes  + Kuka
 
 	-- Agility 0 - Manga 3 30 cm
 	(5, 3),  -- Ana Emauz            + Kurt 
@@ -344,7 +362,8 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(6, 61), -- Vitor Ribeiro    + Pipa
 
 	-- Agility 1 - Manga 1 mini
-	(7, 5), -- Ana Paula Jorge  + Yasmine
+	(7, 5),  -- Ana Paula Jorge  + Yasmine
+	(7, 69), -- Carla Cruz       + Elsa
 
 	-- Agility 1 - Manga 1 midi
 	(8, 12), -- Carla Almeida + Luna
@@ -360,9 +379,11 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(9, 44), -- Rafael          + Pingo
 	(9, 50), -- Sandra Cordeiro + Flash
 	(9, 55), -- Sofia Alves     + KIRA
+	(9, 71), -- Gonçalo Amorim  + Bu
 
 	-- Agility 1 - Manga 2 mini
 	(10, 5), -- Ana Paula Jorge  + Yasmine
+	(10, 69), -- Carla Cruz       + Elsa
 
 	-- Agility 1 - Manga 2 midi
 	(11, 12), -- Carla Almeida + Luna
@@ -378,6 +399,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(12, 44), -- Rafael          + Pingo
 	(12, 50), -- Sandra Cordeiro + Flash
 	(12, 55), -- Sofia Alves     + KIRA
+	(12, 71), -- Gonçalo Amorim  + Bu
 
 	-- Agility 2 - mini
 	(13, 9),  -- Beatriz Rodrigues + Sweet
@@ -407,6 +429,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(17, 17), -- Francisco Esteves + Noa
 	(17, 19), -- Hugo Santos       + Nyugi
 	(17, 67), -- Sofia Narciso     + Salina
+	(17, 72), -- Gonçalo Amorim    + Zip
 
 	-- Agility 3 - standard
 	(18, 7),  -- Andreia Duarte + Tobias
@@ -451,6 +474,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(23, 17), -- Francisco Esteves + Noa
 	(23, 19), -- Hugo Santos       + Nyugi
 	(23, 67), -- Sofia Narciso     + Salina
+	(23, 72), -- Gonçalo Amorim    + Zip
 
 	-- Jumping 3 - standard
 	(24, 7),  -- Andreia Duarte + Tobias
@@ -473,6 +497,8 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(25, 34), -- Mariana Ribeiro + Foxy
 	(25, 41), -- Paulo Cristao   + RAFA
 	(25, 57), -- Tania Fernandes + Shorty
+	(25, 68), -- Hugo Simoes     + Ozzy
+	(25, 70), -- Joao Fernandes  + Kuka
 
 	-- Agility 0 - Manga 1 30 cm
 	(26, 3),  -- Ana Emauz            + Kurt 
@@ -501,6 +527,8 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(28, 34), -- Mariana Ribeiro + Foxy
 	(28, 41), -- Paulo Cristao   + RAFA
 	(28, 57), -- Tania Fernandes + Shorty
+	(28, 68), -- Hugo Simoes     + Ozzy
+	(28, 70), -- Joao Fernandes  + Kuka
 
 	-- Agility 0 - Manga 3 30 cm
 	(29, 3),  -- Ana Emauz            + Kurt 
@@ -526,6 +554,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 
 	-- Agility 1 - Manga 1 mini
 	(31, 5), -- Ana Paula Jorge  + Yasmine
+	(31, 69), -- Carla Cruz       + Elsa
 
 	-- Agility 1 - Manga 1 midi
 	(32, 12), -- Carla Almeida + Luna
@@ -541,9 +570,11 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(33, 44), -- Rafael          + Pingo
 	(33, 50), -- Sandra Cordeiro + Flash
 	(33, 55), -- Sofia Alves     + KIRA
+	(33, 71), -- Gonçalo Amorim  + Bu
 
 	-- Agility 1 - Manga 2 mini
 	(34, 5), -- Ana Paula Jorge  + Yasmine
+	(34, 69), -- Carla Cruz       + Elsa
 
 	-- Agility 1 - Manga 2 midi
 	(35, 12), -- Carla Almeida + Luna
@@ -559,6 +590,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(36, 44), -- Rafael          + Pingo
 	(36, 50), -- Sandra Cordeiro + Flash
 	(36, 55), -- Sofia Alves     + KIRA
+	(36, 71), -- Gonçalo Amorim  + Bu
 
 	-- Agility 2 - mini
 	(37, 9),  -- Beatriz Rodrigues + Sweet
@@ -588,6 +620,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(41, 17), -- Francisco Esteves + Noa
 	(41, 19), -- Hugo Santos       + Nyugi
 	(41, 67), -- Sofia Narciso     + Salina
+	(41, 72), -- Gonçalo Amorim    + Zip
 
 	-- Agility 3 - standard
 	(42, 7),  -- Andreia Duarte + Tobias
@@ -632,6 +665,7 @@ INSERT INTO startlist (course_id, team_id) VALUES
 	(47, 17), -- Francisco Esteves + Noa
 	(47, 19), -- Hugo Santos       + Nyugi
 	(47, 67), -- Sofia Narciso     + Salina
+	(47, 72), -- Gonçalo Amorim    + Zip
 
 	-- Jumping 3 - standard
 	(48, 7),  -- Andreia Duarte + Tobias
