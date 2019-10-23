@@ -212,6 +212,16 @@ def people():
     conn.close()
     return render_template('people.html',people=ppl_list)
     
+@app.route('/dogs')
+def people():
+    conn = get_conn()
+    c = conn.cursor()
+    
+    ppl_list = c.execute('SELECT name FROM dog').fetchall()
+    
+    c.close()
+    conn.close()
+    return render_template('dogs.html',people=ppl_list)
 
 @app.route('/teams')
 def teams():
