@@ -4,14 +4,26 @@ CREATE TABLE breed (
 	fci_id int
 );
 
+CREATE TABLE category (
+	id integer primary key,
+	name text,
+	min_height integer,
+	max_heigth integer
+);
+
+CREATE TABLE level (
+	id integer primary key,
+	name text
+);
+
 CREATE TABLE dog (
 	id integer primary key,
 	name text,
 	reg_name text,
 	date_of_birth date,
-	height int,
 	chip_id text,
-	breed_id int references breed (id)
+	breed_id int references breed (id),
+	category_id int references category (id)
 );
 
 CREATE TABLE person (
@@ -23,7 +35,8 @@ CREATE TABLE person (
 CREATE TABLE team (
 	id integer primary key,
 	dog_id integer references dog (id),
-	person_id integer references person (id)
+	person_id integer references person (id),
+	level int references level (id)
 );
 
 CREATE TABLE competition (
@@ -36,7 +49,9 @@ CREATE TABLE course (
 	id integer primary key,
 	name text,
 	competition_id integer references competition (id),
-	judge_id int references person (id)
+	judge_id int references person (id),
+	category_id integer references category (id),
+	level integer references level (id)
 );
 
 CREATE TABLE startlist (
@@ -53,3 +68,5 @@ CREATE TABLE trial (
 	disqualified boolean,
 	CONSTRAINT unique_trial UNIQUE (course_id, team_id)
 );
+
+
