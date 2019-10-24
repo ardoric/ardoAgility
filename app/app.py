@@ -14,7 +14,7 @@ with open('password') as f:
 
 
 def get_conn():
-    conn = sqlite3.connect('caogurus.db')
+    conn = sqlite3.connect('portugal.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -115,7 +115,7 @@ def submit_trial(course_id, team_id):
 
         c.close()
         conn.close()
-        return render_template('trial.html', course=course, team=team)
+        return render_template('add_trial.html', course=course, team=team)
     else:
         if request.form['action'] != 'set_trial':
             raise Exception('incorrect action')
