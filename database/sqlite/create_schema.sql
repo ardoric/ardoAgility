@@ -8,7 +8,7 @@ CREATE TABLE category (
 	id integer primary key,
 	name text,
 	min_height integer,
-	max_heigth integer
+	max_height integer
 );
 
 CREATE TABLE level (
