@@ -71,7 +71,8 @@ INSERT INTO person (name, is_judge) VALUES
 	('Luis Narciso', 1),
 	('Oscar Muñiz', 1),
 	('Stephanie Semkat', 1),
-	('Zsuzsa Veres', 1) ;
+	('Zsuzsa Veres', 1),
+	('Tamás Tráj', 1) ;
 
 INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUES
 	('Choco', '', '', 0, '', 0),
