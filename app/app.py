@@ -223,6 +223,40 @@ def dogs():
     conn.close()
     return render_template('dogs.html',dogs=dog_list)
 
+@app.route('/dog/new', methods=['GET', 'POST'])
+def new_dog():
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.method == 'GET':
+        conn = get_conn()
+        c = conn.cursor()
+        breeds = c.execute('SELECT id, name FROM breed').fetchall()
+        categories = c.execute('SELECT id, name FROM category').fetchall()
+        c.close()
+        conn.close()
+        return render_template('add_dog.html', breeds=breeds, categories=categories)
+    else:
+        if request.form['action'] != 'add_dog':
+            raise Exception('Wrong Action')
+        
+        conn = get_conn()
+        c = conn.cursor()
+        
+        c.execute(
+            'INSERT INTO dog (name, reg_name, date_of_birth, chip_id, breed_id, category_id) VALUES (?,?,?,?,?,?)',
+            ( request.form['short_name'],
+              request.form['reg_name'],
+              request.form['birth_date'],
+              request.form['chip'],
+              request.form['breed'],
+              request.form['category'] ) 
+        )
+        conn.commit()
+        c.close()
+        conn.close()
+        return redirect(url_for('new_dog'))
+
 @app.route('/teams')
 def teams():
     conn = get_conn()
