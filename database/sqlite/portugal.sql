@@ -8,7 +8,7 @@ INSERT INTO person (name, is_judge) VALUES
 	('Andreia Duarte', 0),
 	('Angela Pereira', 0),
 	('Beatriz Rodrigues', 0),
-	('Belmiro', 0),
+	('Belmiro Sousa', 1),
 	('Bruno Branco', 0),
 	('Carla Almeida', 0),
 	('Carlos Telo', 0),
@@ -16,7 +16,7 @@ INSERT INTO person (name, is_judge) VALUES
 	('Elisabete Mendes', 0),
 	('Francisco Esteves', 0),
 	('Hugo Alves', 0),
-	('Hugo Santos', 0),
+	('Hugo Santos', 1),
 	('Ines Figueiredo', 0),
 	('Isabel Guedes', 0),
 	('Isabel Serrão', 0),
@@ -63,7 +63,15 @@ INSERT INTO person (name, is_judge) VALUES
 	('Hugo Simões', 0),
 	('Carla Cruz', 0),
 	('João Fernandes', 0),
-	('Gonçalo Amorim', 0) ;
+	('Gonçalo Amorim', 0),
+	('Domingos Carneiro', 1),
+	('Filipe Vilhena', 1),
+	('Jorge Pires', 1),
+	('Juan Garcia Alvarez', 1),
+	('Luis Narciso', 1),
+	('Oscar Muñiz', 1),
+	('Stephanie Semkat', 1),
+	('Zsuzsa Veres', 1) ;
 
 INSERT INTO dog (name, reg_name, date_of_birth, height, chip_id, breed_id) VALUES
 	('Choco', '', '', 0, '', 0),
