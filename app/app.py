@@ -60,12 +60,26 @@ def competition(comp_id):
     conn = get_conn()
     c = conn.cursor()
     
-    comp = c.execute('SELECT name FROM competition WHERE id = ?', (comp_id,) ).fetchone()
+    comp = c.execute('SELECT id, name FROM competition WHERE id = ?', (comp_id,) ).fetchone()
     courses = c.execute('SELECT id, name FROM course WHERE competition_id = ?', (comp_id,) ).fetchall()
     
+    judges = []
+    levels = []
+    categories = []
+    
+    if session.has_key('role') and session['role'] == 'admin':
+        judges = c.execute('SELECT id, name FROM person WHERE is_judge').fetchall()
+        levels = c.execute('SELECT id, name FROM level').fetchall()
+        categories = c.execute('SELECT id, name FROM category').fetchall()  
+
     c.close()
     conn.close()
-    return render_template('competition.html', comp=comp, courses=courses)
+    return render_template('competition.html', 
+            comp=comp, 
+            courses=courses,
+            judges=judges,
+            levels=levels,
+            categories=categories)
 
 
 @app.route('/course/<int:course_id>')
@@ -87,6 +101,33 @@ def course(course_id):
     c.close()
     conn.close()
     return render_template('course.html', course=course, startlist=startlist)
+
+@app.route('/course/new', methods=['POST'])
+def new_course():
+    
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.form['action'] != 'add_course':
+        raise Exception('Wrong Action')
+
+    conn = get_conn()
+    c = conn.cursor()
+    
+    c.execute(
+        'INSERT INTO course (name, competition_id, judge_id, category_id, level) VALUES (?,?,?,?,?)',
+        (request.form['name'],
+         request.form['competition_id'],
+         request.form['judge_id'],
+         request.form['category_id'],
+         request.form['level_id'] )
+    )
+    conn.commit()    
+
+    c.close()
+    conn.close()
+    
+    return redirect(url_for('competition', comp_id=request.form['competition_id'])) 
 
 @app.route('/results/<int:course_id>')
 def results(course_id):
