@@ -10,6 +10,41 @@
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Equipas</h1>
 
+{% if session['role'] == 'admin' %}
+<div class="w-25">
+  <form action="/team/new" method="post">
+  <div class="form-group">
+    <label for="person_id">Condutor</label>
+    <select class="form-control" id="person_id" name="person_id">
+      <option value="">-</option>
+{% for person in people %}
+      <option value="{{person.id}}">{{person.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="dog_id">Cao</label>
+    <select class="form-control" id="dog_id" name="dog_id">
+      <option value="">-</option>
+{% for dog in dogs %}
+      <option value="{{dog.id}}">{{dog.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="level">Grau</label>
+    <select class="form-control" id="level" name="level">
+      <option value="">-</option>
+{% for level in levels %}
+      <option value="{{level.id}}">{{level.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+    <button class="btn btn-primary" name="action" type="submit" value="add_team">Adicionar Equipa</button>
+  </form>
+</div>
+{% endif %}
+
 <table class="table table-striped">
   <thead>
     <tr>

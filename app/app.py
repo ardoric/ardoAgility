@@ -293,7 +293,45 @@ def teams():
         INNER JOIN dog ON team.dog_id = dog.id
     """).fetchall()
     
+    people = []
+    dogs   = []
+    levels = []
+    
+    if session.has_key('role') and session['role'] == 'admin':
+        people = c.execute('SELECT id, name FROM person').fetchall()
+        dogs   = c.execute('SELECT id, name FROM dog').fetchall()
+        levels = c.execute('SELECT id, name FROM level').fetchall()
+
     c.close()
     conn.close()
-    return render_template('teams.html', teams=teams_list)
+    return render_template('teams.html', 
+                teams=teams_list,
+                people=people,
+                dogs=dogs,
+                levels=levels)
+
+@app.route('/team/new', methods=['POST'])
+def new_team():
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
     
+    if request.form['action'] != 'add_team':
+        raise Exception('Wrong Action')
+    
+    
+    conn = get_conn()
+    c = conn.cursor()
+
+    
+    c.execute(
+        'INSERT INTO team (dog_id, person_id, level) VALUES (?,?,?)',
+        (request.form['dog_id'],
+         request.form['person_id'],
+         request.form['level'] )
+    )
+
+    conn.commit()
+
+    c.close()
+    conn.close()
+    return redirect(url_for('teams'))
