@@ -9,6 +9,19 @@
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Competicoes</h1>
+
+{% if session['role'] == 'admin' %}
+<div class="w-25">
+  <form action="/competition/new" method="post">
+  <div class="form-group">
+    <label for="name">Nome</label>
+    <input type="text" class="form-control" id="name" name="name" />
+  </div>
+    <button class="btn btn-primary" name="action" type="submit" value="add_competition">Adicionar Competicao</button>
+  </form>
+</div>
+{% endif %}
+
 <ul>
 {% for comp in competitions %}
 <li>{{comp.date}} - <a href="/competition/{{comp.id}}">{{comp.name}}</a></li>
