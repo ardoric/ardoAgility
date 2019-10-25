@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Editar {{dog.name}}</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+	body { background-color: lightyellow }
+</style>
+</head>
+<body>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
+<h1>Editar {{dog.name}}</h1>
+
+
+<hr />
+
+<div class="w-25">
+<form method="post">
+  <div class="form-group">
+    <label for="short_name">Nome Curto</label>
+    <input type="text" class="form-control" id="short_name" name="short_name" value="{{dog.name}}" />
+  </div>
+  <div class="form-group">
+    <label for="reg_name">Nome Registo</label>
+    <input type="text" class="form-control" id="reg_name" name="reg_name" value="{{dog.reg_name}}"/>
+  </div>
+  <div class="form-group">
+    <label for="birth_date">Data Nascimento</label>
+    <input type="text" class="form-control" id="birth_date" name="birth_date" placeholder="YYYY-MM-DD" value="{{dog.date_of_birth}}"/>
+  </div>
+  <div class="form-group">
+    <label for="chip">Chip</label>
+    <input type="text" class="form-control" id="chip" name="chip" value="{{dog.chip_id}}" />
+  </div>
+  <div class="form-group">
+    <label for="breed">Raca</label>
+    <select class="form-control" id="breed" name="breed">
+      <option value="">-</option>
+{% for breed in breeds %}
+      <option value="{{breed.id}}" {{'selected' if dog.breed_id == breed.id}}>{{breed.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="category">Categoria</label>
+    <select class="form-control" id="category" name="category"/>
+      <option value="">-</option>
+{% for category in categories %}
+      <option value="{{category.id}}" {{'selected' if dog.category_id == category.id }}>{{category.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+    <input type="hidden" value="{{dog.id}}" name="dog_id" />
+    <button class="btn btn-primary" name="action" type="submit" value="edit_dog">Salvar</button>
+</form>
+</div>
+</body>
+</html>
+

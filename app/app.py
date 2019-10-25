@@ -277,7 +277,16 @@ def new_person():
 @app.route('/dogs')
 def dogs():
     with conn() as db:
-        dog_list = db.c.execute('SELECT name FROM dog').fetchall()
+        dog_list = db.c.execute("""
+            SELECT 
+                dog.id id, 
+                dog.name name,
+                dog.reg_name reg_name,
+                breed.name breed,
+                category.name category
+            FROM dog
+            LEFT JOIN breed ON dog.breed_id = breed.id
+            LEFT JOIN category ON dog.category_id = category.id""").fetchall()
     
     return render_template('dogs.html',dogs=dog_list)
 
@@ -308,6 +317,47 @@ def new_dog():
             db.conn.commit()
         
         return redirect(url_for('new_dog'))
+
+@app.route('/dog/edit/<int:dog_id>', methods=['GET', 'POST'])
+def edit_dog(dog_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.method == 'GET':
+        with conn() as db:
+            dog = db.c.execute('SELECT id, name, reg_name, date_of_birth, chip_id, breed_id, category_id FROM dog WHERE id = ?', (dog_id,) ).fetchone()
+            breeds = db.c.execute('SELECT id, name FROM breed').fetchall()
+            categories = db.c.execute('SELECT id, name FROM category').fetchall()
+
+        return render_template('edit_dog.html', dog=dog, breeds=breeds, categories=categories)
+    else:
+        if request.form['action'] != 'edit_dog':
+            raise Exception('Wrong Action')
+        
+        with conn() as db:
+            db.c.execute("""
+                UPDATE dog
+                SET
+                    name = ?,
+                    reg_name = ?,
+                    date_of_birth= ?,
+                    chip_id = ?,
+                    breed_id = ?,    
+                    category_id = ?
+                WHERE id = ?""",
+                (request.form['short_name'],
+                 request.form['reg_name'],
+                 request.form['birth_date'],
+                 request.form['chip'],
+                 request.form['breed'],
+                 request.form['category'],
+                 request.form['dog_id']
+                )
+            )
+            db.conn.commit()
+        
+        return redirect(url_for('dogs'))
+    
 
 @app.route('/teams')
 def teams():

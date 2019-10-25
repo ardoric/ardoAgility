@@ -9,17 +9,39 @@
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Caes</h1>
-
+<a href="/dog/new">Novo Cao</a><br />
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Nome</th>
+      <th>Nome Registo</th>
+      <th>Raca</th>
+      <th>Categoria</th>
    </tr>
   </thead>
   <tbody>
 {% for dog in dogs %}
   <tr>
+{% if session['role'] == 'admin' %}
+  	<td><a href="/dog/edit/{{dog.id}}">{{dog.name}}</a></td>
+{% else %}
   	<td>{{dog.name}}</td>
+{% endif %}
+
+  	<td>{{dog.reg_name}}</td>
+
+{% if dog.breed %}
+  	<td>{{dog.breed}}</td>
+{% else %}
+	<td></td>
+{% endif %}
+
+{% if dog.category %}
+  	<td>{{dog.category}}</td>
+{% else %}
+	<td></td>
+{% endif %}
+
   </tr>
 {% endfor %}
   </tbody>
