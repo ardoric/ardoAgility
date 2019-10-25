@@ -30,7 +30,31 @@ def index():
     conn.close()
     
     return render_template('index.html', competitions=comps)
-        
+
+@app.route('/competition/new', methods=['POST'])
+def new_competition():
+    
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.form['action'] != 'add_competition':
+        raise Exception('Wrong Action')
+
+    conn = get_conn()
+    c = conn.cursor()
+    
+    c.execute(
+        'INSERT INTO competition (name, date) VALUES (?,?)',
+        (request.form['name'],
+         request.form['date'] )
+    )
+    conn.commit()    
+
+    c.close()
+    conn.close()
+    
+    return redirect(url_for('index')) 
+   
 @app.route('/competition/<int:comp_id>')
 def competition(comp_id):
     conn = get_conn()
