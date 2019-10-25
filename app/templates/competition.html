@@ -10,6 +10,50 @@
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>{{comp.name}}</h1>
 <h2>Pistas</h2>
+{% if session['role'] == 'admin' %}
+<div class="w-25">
+  <form action="/course/new" method="post">
+  <div class="form-group">
+    <label for="name">Nome</label>
+    <input type="text" class="form-control" id="name" name="name" />
+  </div>
+
+  <div class="form-group">
+    <label for="judge_id">Juiz</label>
+    <select class="form-control" id="judge_id" name="judge_id">
+      <option value="">-</option>
+{% for judge in judges %}
+      <option value="{{judge.id}}">{{judge.name}}</option>
+{% endfor %}
+    </select>  
+  </div>
+
+  <div class="form-group">
+    <label for="level_id">Grau</label>
+    <select class="form-control" id="level_id" name="level_id">
+      <option value="">-</option>
+{% for level in levels %}
+      <option value="{{level.id}}">{{level.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="category_id">Categoria</label>
+    <select class="form-control" id="category_id" name="category_id">
+      <option value="">-</option>
+{% for category in categories %}
+      <option value="{{category.id}}">{{category.name}}</option>
+{% endfor %}
+    </select>
+  </div>
+
+    <input type="hidden" value="{{comp.id}}" name="competition_id" />
+    <button class="btn btn-primary" name="action" type="submit" value="add_course">Adicionar Pista</button>
+  </form>
+</div>
+{% endif %}
+
 <ul>
 {% for course in courses %}
 <li><a href="/course/{{course.id}}">{{course.name}}</a></li>
