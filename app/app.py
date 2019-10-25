@@ -211,7 +211,31 @@ def people():
     c.close()
     conn.close()
     return render_template('people.html',people=ppl_list)
+
+@app.route('/person/new', methods=['POST'])
+def new_person():
     
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.form['action'] != 'add_person':
+        raise Exception('Wrong Action')
+    
+    conn = get_conn()
+    c = conn.cursor()
+    
+    c.execute(
+        'INSERT INTO person (name, is_judge) VALUES (?,?)', 
+        (request.form['name'], request.form.has_key('is_judge'))
+    )    
+    conn.commit()
+    
+    c.close()
+    conn.close()
+
+    return redirect(url_for('people'))
+
+
 @app.route('/dogs')
 def dogs():
     conn = get_conn()

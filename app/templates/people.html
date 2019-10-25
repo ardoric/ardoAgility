@@ -10,6 +10,24 @@
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Pessoas</h1>
 
+
+{% if session['role'] == 'admin' %}
+<div class="w-25">
+  <form action="/person/new" method="post">
+  <div class="form-group">
+    <label for="name">Nome</label>
+    <input type="text" class="form-control" id="name" name="name" />
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="is_judge" name="is_judge" />
+    <label for="is_judge">Juiz</label>
+  </div>
+    <button class="btn btn-primary" name="action" type="submit" value="add_person">Adicionar Pessoa</button>
+  </form>
+</div>
+
+{% endif %}
+
 <table class="table table-striped">
   <thead>
     <tr>
