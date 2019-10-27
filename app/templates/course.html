@@ -5,11 +5,35 @@
 <style type="text/css">
 	body { background-color: lightyellow }
 </style>
+{% if session['role'] != 'admin' %}
 <meta http-equiv="refresh" content="60" />
+{% endif %}
 </head>
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>{{course.name}}</h1>
+{% if session['role'] == 'admin' %}
+<div class="w-25">
+  <form action="/course/{{course.id}}/add_team" method="post">
+  <div class="form-group">
+    <label for="team_id">Equipa</label>
+    <select class="form-control" id="team_id" name="team_id">
+      <option value="">-</option>
+{% for team in teams %}
+      <option value="{{team.id}}">{{team.dog_name + ' + ' + team.person_name}}</option>
+{% endfor %}
+    </select>
+  </div>
+
+
+  </div>
+    <button class="btn btn-primary" name="action" type="submit" value="add_team">Adicionar Equipa</button>
+  </form>
+</div>
+{% endif %}
+
+
+<hr />
 <a href="/results/{{course.id}}">Resultados</a>
 <table class="table table-striped">
   <thead>

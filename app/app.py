@@ -88,7 +88,7 @@ def course(course_id):
     
     with conn() as db:
     
-        course = db.c.execute('SELECT id, name FROM course where id = ?', (course_id,) ).fetchone()
+        course = db.c.execute('SELECT id, name, category_id, level FROM course where id = ?', (course_id,) ).fetchone()
         startlist = db.c.execute("""
             SELECT team.id team_id, start_order, dog.name dog_name, person.name person_name, trial.time trial_time, trial.course_faults course_faults, trial.disqualified disqualified
             FROM startlist 
@@ -98,8 +98,50 @@ def course(course_id):
             LEFT OUTER JOIN trial on (trial.course_id = startlist.course_id AND trial.team_id = startlist.team_id)
             WHERE startlist.course_id = ?
             ORDER BY start_order""", (course_id,) ).fetchall()
+        teams = []
+        if session['role'] == 'admin':
+            teams = db.c.execute("""
+                SELECT
+                    team.id id,
+                    dog.name dog_name,
+                    person.name person_name
+                FROM team
+                INNER JOIN dog ON team.dog_id = dog.id
+                INNER JOIN person ON team.person_id = person.id
+                WHERE dog.category_id = ? AND team.level = ? AND
+                    team.id NOT IN (SELECT team_id FROM startlist WHERE course_id = ?)
+            """, (course['category_id'], course['level'], course_id)).fetchall()
     
-    return render_template('course.html', course=course, startlist=startlist)
+    return render_template('course.html', course=course, startlist=startlist, teams=teams)
+
+@app.route('/course/<int:course_id>/add_team', methods=['POST'])
+def add_team_to_course(course_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.form['action'] != 'add_team':
+        raise Exception('Wrong Action')
+    
+    with conn() as db:
+        start_order = db.c.execute('SELECT max(start_order) new_order FROM startlist WHERE course_id = ?', (course_id,)).fetchone()
+        if start_order['new_order']:
+            start_order = start_order['new_order'] + 1
+        else:
+            start_order = 1
+
+        db.c.execute("""
+            INSERT INTO 
+                startlist (course_id, team_id, start_order) 
+            VALUES 
+                (:course_id,
+                 :team_id, 
+                 :start_order)""",
+            {'course_id': course_id, 'team_id': request.form['team_id'], 'start_order': start_order}
+        )
+        db.conn.commit()
+    
+    return redirect(url_for('course', course_id=course_id))
+    
 
 @app.route('/course/new', methods=['POST'])
 def new_course():
