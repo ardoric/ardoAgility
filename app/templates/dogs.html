@@ -9,7 +9,9 @@
 <body>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Caes</h1>
+{% if session['role'] == 'admin' %}
 <a href="/dog/new">Novo Cao</a><br />
+{% endif %}
 <table class="table table-striped">
   <thead>
     <tr>
