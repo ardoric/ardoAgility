@@ -48,15 +48,23 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Condutor</th>
       <th>Cao</th>
+      <th>Condutor</th>
+      <th>Grau</th>
+      <th>Categoria</th>
    </tr>
   </thead>
   <tbody>
 {% for team in teams %}
   <tr>
-  	<td>{{team.person_name}}</td>
+{% if session['role'] == 'admin' %}
+  	<td><a href="/team/edit/{{team.id}}">{{team.dog_name}}</a></td>
+{% else %}
   	<td>{{team.dog_name}}</td>
+{% endif %}
+  	<td>{{team.person_name}}</td>
+  	<td>{{team.level if team.level}}</td>
+  	<td>{{team.category if team.category}}</td>
   </tr>
 {% endfor %}
   </tbody>

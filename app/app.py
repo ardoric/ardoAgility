@@ -363,10 +363,12 @@ def edit_dog(dog_id):
 def teams():
     with conn() as db:
         teams_list = db.c.execute("""
-            SELECT person.name person_name, dog.name dog_name 
+            SELECT team.id id, person.name person_name, dog.name dog_name, level.name level, category.name category
             FROM team
             INNER JOIN person on team.person_id = person.id
             INNER JOIN dog ON team.dog_id = dog.id
+            LEFT JOIN level ON team.level = level.id
+            LEFT JOIN category on dog.category_id = category.id
         """).fetchall()
         
         people = []
@@ -383,6 +385,37 @@ def teams():
                 people=people,
                 dogs=dogs,
                 levels=levels)
+
+@app.route('/team/edit/<int:team_id>', methods=['GET', 'POST'])
+def edit_team(team_id):
+    if not session.has_key('role') or session['role'] != 'admin':
+        abort(403)
+    
+    if request.method == 'GET':
+        with conn() as db:
+            team = db.c.execute("""
+                SELECT 
+                    team.id, dog.name dog_name, person.name person_name, level
+                FROM team
+                INNER JOIN dog ON team.dog_id = dog.id
+                INNER JOIN person ON team.person_id = person.id
+                WHERE team.id = ?""", (team_id,)).fetchone()
+            levels = db.c.execute('SELECT id, name FROM level').fetchall()
+
+        return render_template('edit_team.html', team=team, levels=levels)
+    else:
+        if request.form['action'] != 'edit_team':
+            raise Exception('Wrong Action')
+        with conn() as db:
+            db.c.execute("""
+                UPDATE team
+                SET level = ?
+                WHERE id = ?""",
+                ( request.form['level'],
+                  request.form['team_id'] )
+            )
+            db.conn.commit()
+        return redirect(url_for('teams'))
 
 @app.route('/team/new', methods=['POST'])
 def new_team():
