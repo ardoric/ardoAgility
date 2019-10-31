@@ -99,7 +99,7 @@ def course(course_id):
             WHERE startlist.course_id = ?
             ORDER BY start_order""", (course_id,) ).fetchall()
         teams = []
-        if session['role'] == 'admin':
+        if session.has_key('role') and session['role'] == 'admin':
             teams = db.c.execute("""
                 SELECT
                     team.id id,
