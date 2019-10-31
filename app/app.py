@@ -254,10 +254,10 @@ def disqualify(course_id, team_id):
         db.c.execute('INSERT OR REPLACE INTO trial (course_id, team_id, time, course_faults, disqualified) VALUES (?,?,0,0,1)', (course_id, team_id) )
         
         db.conn.commit()
-        next_team = next_trial(course_id, team_id, c)
+        next_team = next_trial(course_id, team_id, db.c)
     
     if next_team > 0:
-        return redirect(url_for('submit_trial', course_id=course_id, team_id=team_id))
+        return redirect(url_for('submit_trial', course_id=course_id, team_id=next_team))
     else:
         return redirect(url_for('course', course_id=course_id))
 
