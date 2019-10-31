@@ -10,7 +10,7 @@
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOVD9JHuLoTQ8uwsj87SiUKOpDL7snZ1WpnGbQCFaqUcTCb2s1Bg" />
 <h1>Submeter Tempo</h1>
 
-<strong>Pista</strong>: <a href="/course/{{course.id}}">{{course.name}}</a><br/>
+<strong>Pista</strong>: <a href="/course/{{course.id}}" tabindex="-1">{{course.name}}</a><br/>
 <strong>Equipa</strong>: {{team.person_name}} + {{team.dog_name}}<br/>
 
 <hr />
@@ -19,15 +19,15 @@
 <form method="post">
   <div class="form-group">
     <label for="time">Tempo</label>
-    <input type="text" class="form-control" id="time" name="time" />
+    <input type="text" class="form-control" id="time" name="time"/>
   </div>
   <div class="form-group">
     <label for="faults">Faltas</label>
-    <input type="text" class="form-control" id="faults" name="faults" />
+    <input type="text" class="form-control" id="faults" name="faults"/>
   </div>
   <div class="form-group">
     <label for="refusals">Recusas</label>
-    <input type="text" class="form-control" id="refusals" name="refusals" />
+    <input type="text" class="form-control" id="refusals" name="refusals"/>
   </div>
     <button class="btn btn-primary" name="action" type="submit" value="set_trial">Submeter Tempo</button>
     <button class="btn btn-primary" formaction="/disqualify/{{course.id}}/{{team.id}}" name="action" type="submit" value="disqualify">Desqualificar</button>
